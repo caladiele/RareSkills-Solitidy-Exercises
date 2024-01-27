@@ -13,7 +13,18 @@ contract DistributeV2 {
 
     constructor() payable {}
 
-    function distributeEther(address[] memory addresses) public {
-        // your code here
+    function distributeEther(address[] memory addresses) public payable {
+        uint256 totalEth = address(this).balance;
+        uint256 totalAddresses = addresses.length;
+        uint256 share = totalEth / totalAddresses;
+
+        for (uint256 i = 0; i < totalAddresses; i++) {
+           (bool isTransferOK, ) = addresses[i].call{value: share}(abi.encodeWithSignature(""));
+           
+            if(!isTransferOK) {
+                continue;
+            }
+        }
     }
 }
+
