@@ -5,6 +5,7 @@ contract Donations {
     mapping(address => uint256) public amountDonated;
 
     receive() external payable {
+        amountDonated[msg.sender] += msg.value;
         // your code here
         // amountDonated should store the amount
         // the person donated
